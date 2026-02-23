@@ -1,1 +1,64 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+
+@theme {
+    --color-dry-sage-50: #f6f8ed;
+    --color-dry-sage-100: #edf0db;
+    --color-dry-sage-200: #dce1b7;
+    --color-dry-sage-300: #cad392;
+    --color-dry-sage-400: #b8c46e;
+    --color-dry-sage-500: #a7b54a;
+    --color-dry-sage-600: #85913b;
+    --color-dry-sage-700: #646d2c;
+    --color-dry-sage-800: #43481e;
+    --color-dry-sage-900: #21240f;
+    --color-dry-sage-950: #17190a;
+
+    --color-dark-teal-50: #ebf7fa;
+    --color-dark-teal-100: #d6eff5;
+    --color-dark-teal-200: #aedfea;
+    --color-dark-teal-300: #85cfe0;
+    --color-dark-teal-400: #5dbfd5;
+    --color-dark-teal-500: #34afcb;
+    --color-dark-teal-600: #2a8ca2;
+    --color-dark-teal-700: #1f697a;
+    --color-dark-teal-800: #154651;
+    --color-dark-teal-900: #0a2329;
+    --color-dark-teal-950: #07191c;
+
+    --color-yale-blue-50: #e6f3ff;
+    --color-yale-blue-100: #cde8fe;
+    --color-yale-blue-200: #9ad1fe;
+    --color-yale-blue-300: #68bafd;
+    --color-yale-blue-400: #35a3fd;
+    --color-yale-blue-500: #038cfc;
+    --color-yale-blue-600: #0270ca;
+    --color-yale-blue-700: #025497;
+    --color-yale-blue-800: #013865;
+    --color-yale-blue-900: #011c32;
+    --color-yale-blue-950: #001423;
+
+    --color-baltic-blue-50: #e6f4ff;
+    --color-baltic-blue-100: #cde9fe;
+    --color-baltic-blue-200: #9bd3fd;
+    --color-baltic-blue-300: #68bcfd;
+    --color-baltic-blue-400: #36a6fc;
+    --color-baltic-blue-500: #0490fb;
+    --color-baltic-blue-600: #0373c9;
+    --color-baltic-blue-700: #025697;
+    --color-baltic-blue-800: #023a64;
+    --color-baltic-blue-900: #011d32;
+    --color-baltic-blue-950: #011423;
+
+    --color-baltic-blue-50: #e6f6ff;
+    --color-baltic-blue-100: #cdecfe;
+    --color-baltic-blue-200: #9ad9fe;
+    --color-baltic-blue-300: #68c6fd;
+    --color-baltic-blue-400: #35b4fd;
+    --color-baltic-blue-500: #03a1fc;
+    --color-baltic-blue-600: #0281ca;
+    --color-baltic-blue-700: #026097;
+    --color-baltic-blue-800: #014065;
+    --color-baltic-blue-900: #012032;
+    --color-baltic-blue-950: #001723;
+}
