@@ -1,4 +1,4 @@
-import { WorkspaceComponent } from '../../pages/workspace/workspace.component';
+import { ConfigComponent } from '../../pages/workspace/config/config.component';
 import { Routes } from '@angular/router';
 import { LayoutComponent } from '../../core/layout/layout.component';
 import { authGuard } from '../../core/guards/auth-guard';
@@ -10,12 +10,12 @@ export const WORKSPACE_ROUTES: Routes = [{
     children: [
       {
         path: 'sessions',
-        loadComponent: () => import('../../pages/workspace/workspace.component').then(m => m.WorkspaceComponent)
+        loadComponent: () => import('../../pages/workspace/sessions/sessions.component').then(m => m.SessionsComponent)
       },
-      // {
-      //   path: 'projects',
-      //   loadComponent: () => import('./pages/projects/projects.component').then(m => m.ProjectsComponent)
-      // },
+      {
+        path: 'configuration',
+        loadComponent: () => import('../../pages/workspace/config/config.component').then(m => m.ConfigComponent)
+      },
       // { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
 }

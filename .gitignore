@@ -46,3 +46,6 @@ Thumbs.db
 # API Secrets
 /src/environments/environment.development.ts
 /src/environments/environment.ts
+.env
+.env.local
+.env.*.local

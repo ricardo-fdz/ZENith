@@ -44,16 +44,17 @@ export class LoginComponent {
     try {
       await this.authService.loginWithGoogle()
       // 3. Verificamos si tenemos usuario tras el login
+
+    } catch {
+      console.error("Error en la autenticación");
+    }
+    finally {
       if (this.authService.currentUser()) {
         console.log("Usuario autenticado, redirigiendo...");
 
         // REDIRECCIÓN AQUÍ: Es el flujo de éxito.
         await this.router.navigate(['/workspace/sessions']);
       }
-    } catch {
-      console.error("Error en la autenticación");
-    }
-    finally {
       this.loading.set(false);
     }
   }
