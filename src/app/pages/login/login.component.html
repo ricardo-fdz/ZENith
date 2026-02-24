@@ -1,6 +1,6 @@
 <div class="min-h-screen flex items-center bg-dry-sage-100" id="login-container">
 
-  <div class="bg-white min-h-screen content-center justify-center rounded-lg shadow-lg min-w-120 max-w-250 p-15">
+  <div class="bg-white min-h-screen content-center justify-center rounded-lg shadow-lg grid-col-1 w-full p-15 md-:grid-cols-2 lg:max-w-100">
     <h1 class="text-4xl text-center font-bold text-dark-teal-700 text center_focus_strong mb-10">
       ZEN<span class="text-dry-sage-500">i</span>th
     </h1>
@@ -37,13 +37,13 @@
   class="w-full border border-gray-300 py-2 rounded-md flex items-center justify-center gap-2 hover:bg-gray-50 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ...">
         <img src="https://www.google.com/favicon.ico" class="w-4 h-4"> {{ loading() ? 'Cargando...' : 'Iniciar con Google' }}
       </button>
-      <small>No tienes cuenta <a href="">Regístrate</a></small>
+      <small>No tienes cuenta <a href="" class="text-baltic-blue-800 underline">Regístrate</a></small>
     </form>
   </div>
-  <div class="flex ms-20 w-100  flex flex-col max-h-screen">
+  <div class="flex  w-full flex-col items-center max-h-screen hidden md:block md:grid-cols-2  ">
     <h2 class="w-full text-5xl font-bold text-dark-teal-700 bg-gray-200 p-10" >Organiza tus ideas</h2>
-    <div class="p-10  content-center justify-center  rounded-full ">
-      <img src="../../../assets/login-ilustration.svg" alt="" class=" p-20 rounded-  w-full min-w-150 max-w-250">
+    <div class="p-10  content-center justify-center  rounded-full lg:w-100 ">
+      <img src="../../../assets/login-ilustration.svg" alt="" class="  w-full lg:max-w-100">
     </div>
   </div>
 </div>

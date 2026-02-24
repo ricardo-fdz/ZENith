@@ -1,32 +1,46 @@
 <div class="flex h-screen bg-dry-sage-50">
-  <aside class="w-64 bg-dark-teal-900 text-white flex flex-col p-6 shadow-xl">
-    <div class="flex place-content place-items gap-3 mb-10">
-      <!-- <img src="assets/logo-illustration.svg" class="w-8" alt="Logo"> -->
-      <h1 class="text-xl font-bold tracking-tight">ZENith</h1>
-      <button>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
-      </button>
-    </div>
+  <button class="fixed m-8 lg:hidden" [class.hidden]="isToggleAside()" (click)="toggleAside()" >
+    <lucide-icon [name]="menuIcon" class="w-5 h-5 text-accent-gold"></lucide-icon>
+  </button>
+<aside [class]="asideClasses()">
+  <div class="flex items-center mb-10" [class.justify-between]="isToggleAside()" [class.justify-center]="!isToggleAside()">
+    @if(isToggleAside()){
+      <h1 class="text-xl font-bold tracking-tight truncate">ZENith</h1>
+    }
+    <button (click)="toggleAside()" class="p-1 hover:bg-dark-teal-800 rounded">
+      <lucide-icon [name]="isToggleAside() ? leftIcon : rightIcon" class="w-6 h-6 text-accent-gold"></lucide-icon>
+    </button>
+  </div>
 
-    <nav class="flex-1 space-y-2">
-      <a routerLink="/workspace/sessions"
-        class="flex items-center cursor-pointer p-3 rounded-lg hover:bg-dark-teal-800 transition">Sessions</a>
-      <a routerLink="/workspace/configuration"
-        class="flex items-center cursor-pointer p-3 rounded-lg hover:bg-dark-teal-800 transition">Configuration</a>
-      <a routerLink="/configuration"
-        class="flex items-center p-3 rounded-lg hover:bg-dark-teal-800 transition">Proyectos</a>
-    </nav>
+  <nav class="flex-1 space-y-4">
+    <a routerLink="/workspace/sessions" class="group flex items-center p-3 rounded-lg hover:bg-dark-teal-800 transition-colors">
+      <lucide-icon [name]="sessionsIcon" class="w-6 h-6 text-accent-gold"></lucide-icon>
+      @if(isToggleAside()){
+        <span class="ml-3 truncate">Sessions</span>
+      }
+    </a>
 
-    <div class="pt-6 border-t border-dark-teal-800 flex items-center gap-3">
-      <img [src]="authService.currentUser()?.photoURL" class="w-10 h-10 rounded-full border border-dry-sage-400">
+    <a routerLink="/workspace/configuration" class="group flex items-center p-3 rounded-lg hover:bg-dark-teal-800 transition-colors">
+      <lucide-icon [name]="configIcon" class="w-6 h-6 text-accent-gold"></lucide-icon>
+      @if(isToggleAside()){
+        <span class="ml-3 truncate">Configuration</span>
+      }
+    </a>
+  </nav>
+
+  <div class="pt-6 border-t border-dark-teal-800 flex items-center gap-3" [class.justify-center]="!isToggleAside()">
+    <img [src]="authService.currentUser()?.photoURL" class="w-10 h-10 min-w-[2.5rem] rounded-full border border-dry-sage-400">
+
+    @if(isToggleAside()){
       <div class="overflow-hidden">
         <p class="text-sm font-medium truncate">{{ authService.currentUser()?.displayName }}</p>
         <button (click)="logout()" class="text-xs text-dry-sage-400 hover:text-white">Cerrar sesión</button>
       </div>
-    </div>
-  </aside>
+    }
+  </div>
+</aside>
 
-  <main class="flex-1 overflow-y-auto p-8">
+  <main class="flex-1 overflow-y-auto p-8 pt-16" (click)="isToggleAside.set(false)">
     <router-outlet></router-outlet>
   </main>
 </div>
