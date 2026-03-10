@@ -1,0 +1,61 @@
+@if(isOpen()) {
+<!-- Backdrop -->
+<div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" (click)="close.emit()">
+</div>
+
+<!-- Modal -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 ">
+  <div class="rounded-2xl shadow-2xl w-full max-w-md p-6 flex flex-col gap-4 bg-dark-teal-800">
+
+    <div class="flex justify-end items-center">
+      <button (click)="isNewSelected.set(false)" [class.hidden]="!isNewSelected()"
+        class="p-2 hover:bg-dry-sage-200 rounded-full transition-colors">
+        <lucide-icon [name]="backIcon" class="w-5 h-5"></lucide-icon>
+      </button>
+      <button (click)="close.emit()" class="p-2 hover:bg-dry-sage-200 rounded-full transition-colors">
+        <lucide-icon [name]="xIcon" class="w-5 h-5"></lucide-icon>
+      </button>
+
+    </div>
+
+    @if(!isNewSelected()){
+    <div class="flex flex-col gap-2 bg-dry-sage-100 p-6 gap-6 rounded-[2rem] shadow-xl border border-white">
+      <!-- contenido del modal -->
+      <ng-content>
+
+        <input type="text" [value]="searchTerm()" (input)="searchTerm.set($any($event.target).value)"
+          placeholder="Buscar sesión"
+          class="w-full bg-white border border-dark-teal-100 rounded-2xl p-2 ps-4 text-dark-teal-900 placeholder:text-dark-teal-200 focus:ring-2 focus:ring-accent-gold/20 focus:border-accent-gold outline-none transition-all">
+        <div class="scrollbar-hide">
+          <h3 class="text-md font-bold text-dry-sage-500">Selecciona una sesión</h3>
+          <ul class="rounded-xl  h-60 max-h-60 p-2  overflow-y-auto custom-scrollbar">
+
+            @for (session of filteredSessions(); track session.id) {
+            <li (click)="selectSession(session)"
+              class="flex fex-row gap-2 text-dark-teal-900 bg-white/50 p-2 rounded-2xl border border-white rounded-md mt-2 p-2 cursor-pointer hover:bg-dry-sage-500">
+              <lucide-icon [color]="session.color" [name]="workIcon" class="w-5 h-5"></lucide-icon>
+              {{session.name}}
+            </li>
+            }
+          </ul>
+        </div>
+      </ng-content>
+    </div>
+    <div class="relative flex py-3 items-center">
+      <div class="flex-grow border-t border-gray-300"></div>
+      <span class="flex-shrink mx-4 text-gray-400 text-sm">O</span>
+      <div class="flex-grow border-t border-gray-300"></div>
+    </div>
+    <button (click)="isNewSelected.set(true)" type="submit" class="mt-2 w-full py-2 bg-dark-teal-900 text-white rounded-2xl shadow-lg font-bold
+              hover:bg-dark-teal-800 hover:-translate-y-1 active:scale-95
+              disabled:opacity-30 disabled:pointer-events-none disabled:grayscale
+              transition-all duration-300 flex items-center justify-center gap-2">
+      <span>Crear una nueva</span>
+    </button>
+    }@else{
+    <zen-session-form (submitted)="close.emit()" />
+    }
+
+  </div>
+</div>
+}

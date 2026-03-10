@@ -1,0 +1,59 @@
+@if(isOpen()) {
+<!-- Backdrop -->
+<div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" (click)="close.emit()">
+</div>
+
+<!-- Modal -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 ">
+  <div class="rounded-2xl shadow-2xl w-full max-w-md p-6 flex flex-col gap-4 bg-dark-teal-800">
+    <div class="flex flex-row center-center justify-between ">
+      <h3 class="text-dry-sage-500 font-bold font-2xl">Preferencias de Sesión</h3>
+      <button (click)="close.emit()" class="p-2 hover:bg-dry-sage-200 rounded-full transition-colors">
+        <lucide-icon [name]="xIcon" class="w-5 h-5"></lucide-icon>
+      </button>
+    </div>
+
+    <div class="flex flex-col gap-2 bg-dry-sage-100 p-6 gap-6 rounded-[2rem] shadow-xl border border-white">
+      <!-- contenido del modal -->
+      <ng-content>
+        <form [formGroup]="sessionForm">
+          <label for="" class="mb-2 inline-block text-dark-teal-900 ">
+            Nombre:
+            <input type="text" [formControl]="sessionForm.controls.name">
+          </label>
+          <label for="" class="mb-2 inline-block text-dark-teal-900 ">
+            Color:
+            <input type="color" [formControl]="sessionForm.controls.color">
+          </label>
+          <label for="" class="mb-2 inline-block text-dark-teal-900 ">
+            Duración de trabajo:
+            {{sessionForm.controls.workDuration.value}}
+            <input type="range" min="5" step="5" max="120" [formControl]="sessionForm.controls.workDuration"
+              class="transparent h-[5px] w-full rounded-full cursor-pointer appearance-none border-transparent bg-gray-300 ">
+          </label>
+          <label for="" class="mb-2 inline-block text-dark-teal-900 ">
+            Duración de descanso:
+            <input type="number" [formControl]="sessionForm.controls.shortBreak">
+          </label>
+          <label for="" class="mb-2 inline-block text-dark-teal-900 ">
+            Duración de descaso largo:
+            <input type="number" [formControl]="sessionForm.controls.longBreak">
+          </label>
+          <label for="" class="mb-2 inline-block text-dark-teal-900 ">
+            Ciclos de trabajo para descansos largos:
+            <select name="" id="" [formControl]="sessionForm.controls.sessionsUntilLongBreak" >
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </label>
+        </form>
+
+      </ng-content>
+    </div>
+  </div>
+
+
+</div>
+}

@@ -1,0 +1,24 @@
+<div class="relative flex justify-center items-center rounded-full border-4 border-dark-teal-800
+            w-48 h-48 sm:w-56 sm:h-56 md:w-56 md:h-56 lg:w-72 lg:h-72
+            shadow-2xl bg-white shrink-0 cursor-pointer" (click)="hiddenTimer.set(!hiddenTimer())" >
+  <p [class.blur-md]="hiddenTimer()" class="font-mono text-dark-teal-900 text-4xl sm:text-5xl md:text-4xl lg:text-6xl">{{displayTime()}}</p>
+  <div class="absolute inset-0 rounded-full border-4 border-accent-gold opacity-20 scale-105"></div>
+</div>
+
+<div class="flex gap-5 md:gap-6 justify-center items-center shrink-0">
+  <button class="p-3 hover:bg-dry-sage-100 rounded-full transition-colors">
+    <lucide-icon [name]="stopIcon" class="w-7 h-7 md:w-7 md:h-7 lg:w-8 lg:h-8 text-accent-gold"></lucide-icon>
+  </button>
+  <button class="p-3 md:p-3 lg:p-4 bg-dark-teal-900 rounded-full hover:scale-110 transition-all shadow-lg"
+    (click)="!isRunning()?startTimer():pauseTimer()">
+    @if(isRunning()){
+    <lucide-icon [name]="pauseIcon" class="w-7 h-7 md:w-7 md:h-7 lg:w-8 lg:h-8 text-white"></lucide-icon>
+    }@else{
+    <lucide-icon [name]="playIcon" class="w-7 h-7 md:w-7 md:h-7 lg:w-8 lg:h-8 text-white"></lucide-icon>
+    }
+  </button>
+  <button class="p-3 hover:bg-dry-sage-300 cursor-pointer rounded-full transition-colors"
+    (click)="handleTimerFinished()">
+    <lucide-icon [name]="skipIcon" class="w-7 h-7 md:w-7 md:h-7 lg:w-8 lg:h-8 text-accent-gold"></lucide-icon>
+  </button>
+</div>

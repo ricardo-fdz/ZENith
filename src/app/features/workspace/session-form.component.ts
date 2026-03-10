@@ -1,28 +1,21 @@
-<div class="flex flex-col h-screen overflow-hidden ">
-  <div class="flex flex-col lg:flex-row flex-1 overflow-hidden">
+import { Component, inject, input, output, Signal, signal } from '@angular/core';
+import { WorkspaceService } from '../../core/sessions/workspace.service';
+import { UserService } from '../../core/user/user.service';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LucideAngularModule } from 'lucide-angular';
 
-    <div class="w-full lg:w-1/2 flex flex-col min-h-0 overflow-hidden">
-
-      <div class="flex w-full justify-between items-center ps-20 pt-5 pe-5 md:ps-8 shrink-0">
-        @if(workspaceService.isLoading()){
-        <div class="flex justify-center py-20">
-          <span class="animate-pulse text-gray-400">Inspirando...</span>
-        </div>
-        }
-        @else{
-        @if(workspaceService.currentSession()){
-        <h2 class="text-3xl truncate cursor-pointer font-bold text-dark-teal-900" (click)="showSessionModal()">{{workspaceService.currentSession()?.name}}</h2>
-        <button class="hover:scale-110 transition-all p-2 bg-white rounded-full shadow-sm cursor-pointer" (click)="showSessionConfModal()">
-          <lucide-icon [name]="confIcon" class="w-6 h-6 text-accent-gold"></lucide-icon>
-        </button>
-        }
-        @else{
-        <div class="max-w-md mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 mb-3">
+@Component({
+  selector: 'zen-session-form',
+  standalone: true,
+  imports: [LucideAngularModule, ReactiveFormsModule],
+  template: `
+   <div class="max-w-md mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 mb-3">
+          @if(typeView() == 'start'){
           <h2 class="text-3xl font-bold text-dark-teal-900 mb-2">Bienvenido</h2>
           <p class="text-dark-teal-700 mb-3 leading-relaxed">
             Empieza creando una nueva sesión de trabajo o gestiona tus tareas pendientes.
           </p>
-
+          }
           <form [formGroup]="sessionForm" (submit)="createNewSession()"
             class="flex flex-col bg-dry-sage-100 p-6 gap-6 rounded-[2rem] shadow-xl border border-white">
 
@@ -54,29 +47,35 @@
               hover:bg-dark-teal-800 hover:-translate-y-1 active:scale-95
               disabled:opacity-30 disabled:pointer-events-none disabled:grayscale
               transition-all duration-300 flex items-center justify-center gap-2">
-              <span>Comenzar ahora</span>
+              <span>{{typeView() == 'start'? "Comenzar ahora":'Crear nueva session'}}</span>
               <i class="lucide-sparkles text-accent-gold"></i> </button>
           </form>
         </div>
+  `,
+})
+export class SessionFormComponent {
+  submitted = output<void>();
+  typeView = input<string>();
+  isNewSelected = input();
+  workspaceService = inject(WorkspaceService);
+  userService = inject(UserService)
+  currentSession = this.workspaceService.currentSession();
+  private fb = inject(FormBuilder);
 
-        }
-        }
-      </div>
+  sessionForm = this.fb.group({
+    name: ['Nueva sesión', [Validators.required]],
+    color: ['#154651', [Validators.required]],
+  })
 
-      @if(workspaceService.currentSession()){
-        <zen-timer/>
-      }
-    </div>
+  async createNewSession() {
+    const { name, color } = this.sessionForm.value;
+    if (!name || !color) return;
+    try {
+      const sessionId = await this.workspaceService.createSession(name, color);
+      this.submitted.emit();
+    } catch {
 
-    <zen-tasks></zen-tasks>
-  </div>
-</div>
-<zen-session-modal
-  [isOpen]="isSessionModalOpen"
-  (close)="isSessionModalOpen = false">
-</zen-session-modal>
+    }
+  }
 
-<zen-session-conf-modal
-  [isOpen]="isSessionConfModalOpen"
-  (close)="isSessionConfModalOpen = false">
-</zen-session-conf-modal>
+}

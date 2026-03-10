@@ -1,0 +1,44 @@
+<div class="flex flex-row items-center gap-5 justify-between">
+  <h3 class="text-xs uppercase tracking-[0.2em] text-dry-sage-300 font-bold opacity-70">Focus List</h3>
+  <div class="flex flex-row center-center gap-5">
+    <span>Tareas: 12</span> <span>Terminadas: 2</span>
+    <div class="group relative">
+      <button
+        class="rounded-md border cursor-pointer border-gray-200 px-3 py-2 text-sm font-medium shadow-xs bg-dry-sage-400 hover:bg-dry-sage-300 group-focus-within:pointer-events-none">
+        <lucide-icon [name]="filterIcon" class="w-5 h-5"></lucide-icon>
+
+      </button>
+      <div
+        class="rounded-md border border-gray-200 bg-white p-1 shadow-md grid min-w-40 absolute right-0 mt-2 opacity-0 pointer-events-none transition-opacity group-focus-within:opacity-100 group-focus-within:pointer-events-auto">
+        <label for="isGlobal" class="rounded-md px-2.5 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-100">
+          Mostrar tareas globales
+
+          <input type="checkbox" name="isGlobal" [checked]="showGlobalTasks()"
+            (change)="showGlobalTasks.set(!showGlobalTasks())">
+        </label>
+        <a class="rounded-md px-2.5 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-100">Item Two</a>
+        <a class="rounded-md px-2.5 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-100">Item Three</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="flex-1 overflow-y-auto pr-2 space-y-3 custom-scrollbar">
+  @for (item of filteredTasks(); track item.id) {
+  <label
+    class="flex items-center gap-4 p-4 rounded-xl hover:bg-dark-teal-800/50 cursor-pointer transition-all border border-white/5 group">
+    <input [checked]="item.status === 'completed'" (change)="workspaceService.toggleTaskStatus(item.id,item.status)"
+      type="checkbox" class="w-5 h-5 accent-accent-gold rounded cursor-pointer">
+    <span class="text-lg font-light group-hover:translate-x-1 transition-transform">{{item.title }}</span>
+  </label>
+  }
+</div>
+<div class="mt-4 shrink-0">
+  <div class="relative">
+    <form [formGroup]="taskForm">
+      <input [formControl]="taskForm.controls.title" type="text" placeholder="+ Add a new task"
+        class="w-full bg-dark-teal-800/50 border border-white/10 rounded-2xl p-4 text-white placeholder:text-dark-teal-400 focus:ring-2 focus:ring-accent-gold focus:bg-dark-teal-800 outline-none transition-all">
+      <input [formControl]="taskForm.controls.isGlobal" type="checkbox" name="" id="">
+    </form>
+  </div>
+</div>

@@ -26,21 +26,27 @@
         <span class="ml-3 truncate">Configuration</span>
       }
     </a>
+    <a routerLink="/workspace/dashboard" class="group flex items-center p-3 rounded-lg hover:bg-dark-teal-800 transition-colors">
+      <lucide-icon [name]="dashboardIcon" class="w-6 h-6 text-accent-gold"></lucide-icon>
+      @if(isToggleAside()){
+        <span class="ml-3 truncate">Configuration</span>
+      }
+    </a>
   </nav>
 
   <div class="pt-6 border-t border-dark-teal-800 flex items-center gap-3" [class.justify-center]="!isToggleAside()">
-    <img [src]="authService.currentUser()?.photoURL" class="w-10 h-10 min-w-[2.5rem] rounded-full border border-dry-sage-400">
+    <img [src]="currentUser()?.photoURL || '../../../assets/avatar-default.png'" class="w-10 h-10 min-w-[2.5rem] rounded-full border border-dry-sage-400">
 
     @if(isToggleAside()){
       <div class="overflow-hidden">
-        <p class="text-sm font-medium truncate">{{ authService.currentUser()?.displayName }}</p>
+        <p class="text-sm font-medium truncate">{{currentUser()?.displayName }}</p>
         <button (click)="logout()" class="text-xs text-dry-sage-400 hover:text-white">Cerrar sesión</button>
       </div>
     }
   </div>
 </aside>
 
-  <main class="flex-1 overflow-y-auto p-8 pt-16" (click)="isToggleAside.set(false)">
+  <main class="flex-1 overflow-y-auto " (click)="isToggleAside.set(false)">
     <router-outlet></router-outlet>
   </main>
 </div>

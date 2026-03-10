@@ -8,8 +8,6 @@ import { map, take } from 'rxjs';
 export const authGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
-    console.log(authService.currentUser()? true:false)
-  // Usamos la Signal de tu servicio
   return authState(inject(Auth)).pipe(
     take(1),
     map(user => {

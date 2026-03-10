@@ -1,61 +1,70 @@
 import { AuthService } from '../../core/auth/auth.service';
-import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, inject, Injectable, signal } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { AUTH_ERRORS } from '../../core/utils/auth-errors';
+import { FieldErrorComponent } from '../../shared/components/field-error/field-error.component';
 
 @Component({
   selector: 'zen-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  imports: [RouterLink, ReactiveFormsModule, FieldErrorComponent]
 })
 export class LoginComponent {
   authService = inject(AuthService);
-  loginForm: FormGroup;
   loading = signal(false);
   submitted = signal(false);
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private router: Router
-  ) {
-    this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
-  }
+  router = inject(Router)
+  fb = inject(FormBuilder)
+  routerLink = RouterLink;
+  errorMessage = signal('');
+  loginForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]]
+  });
 
   get f() {
     return this.loginForm.controls;
   }
 
-  onSubmit() {
-    this.submitted.set(true);
-
-    if (this.loginForm.invalid) {
-      return;
-    }
-
-    this.loading.set(true);
-    // Add authentication logic here
-    console.log(this.loginForm.value);
-  }
   async onLoginWithGoogle() {
+
+
     this.loading.set(true);
     try {
-      await this.authService.loginWithGoogle()
-      // 3. Verificamos si tenemos usuario tras el login
+      const result = await this.authService.loginWithGoogle(); // Tu método existente
+      if (result.user) {
+        this.router.navigate(['/workspace']);
+      }
 
-    } catch {
-      console.error("Error en la autenticación");
+    } catch (error: any) {
+      this.errorMessage.set(AUTH_ERRORS[error.code] || AUTH_ERRORS["default"]);
+      console.log("Error en la autenticación: ", error.code);
     }
     finally {
       if (this.authService.currentUser()) {
         console.log("Usuario autenticado, redirigiendo...");
-
-        // REDIRECCIÓN AQUÍ: Es el flujo de éxito.
         await this.router.navigate(['/workspace/sessions']);
       }
       this.loading.set(false);
+    }
+  }
+  async onLogin() {
+    if (!this.loginForm.valid) {
+      console.log(this.loginForm.valid);
+
+      this.errorMessage.set("Revise las credenciales")
+    }
+    const { email, password } = this.loginForm.value; // Suponiendo que usas ReactiveForms
+    if (!email || !password) return;
+
+    try {
+      await this.authService.loginWithEmail(email, password);
+      this.router.navigate(['/workspace/sessions']); // Redirigir al dashboard zen
+    } catch (error: any) {
+      this.errorMessage.set(AUTH_ERRORS[error.code] || AUTH_ERRORS["default"]);
+      console.log("Error de acceso:", error.code);
     }
   }
 }

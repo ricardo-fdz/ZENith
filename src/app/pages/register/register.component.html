@@ -1,1 +1,78 @@
-<p>register works!</p>
+<div class="min-h-screen flex items-center bg-dry-sage-100" id="login-container">
+
+  <div
+    class="bg-white min-h-screen content-center justify-center rounded-lg shadow-lg grid-col-1 w-full p-15 md-:grid-cols-2 lg:max-w-100">
+    <h1 class="text-4xl text-center font-bold text-dark-teal-700 text center_focus_strong mb-10">
+      ZEN<span class="text-dry-sage-500">i</span>th
+    </h1>
+    <h2 class="text-2xl font-bold mb-6 text-center text-dark-teal-700">Crear cuenta</h2>
+
+    <form [formGroup]="registerForm" class="space-y-4" (ngSubmit)="onRegister()">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Nombre de usuario</label>
+        <input type="text" placeholder="" formControlName="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-dark-teal-500
+          [&.ng-invalid.ng-touched]:border-red-500
+          [&.ng-invalid.ng-touched]:ring-2
+          [&.ng-invalid.ng-touched]:ring-red-200">
+        <field-error [control]="registerForm.controls.name" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" placeholder="example@email.com" formControlName="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-dark-teal-500
+          [&.ng-invalid.ng-touched]:border-red-500
+          [&.ng-invalid.ng-touched]:ring-2
+          [&.ng-invalid.ng-touched]:ring-red-200">
+        <field-error [control]="registerForm.controls.email" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Contraseña</label>
+        <input type="password" placeholder="••••••••••••" formControlName="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-dark-teal-500
+          [&.ng-invalid.ng-touched]:border-red-500
+          [&.ng-invalid.ng-touched]:ring-2
+          [&.ng-invalid.ng-touched]:ring-red-200">
+        <field-error [control]="registerForm.controls.password" />
+      </div>
+
+      <button type="submit"
+        class="w-full bg-dark-teal-700 text-white py-2 rounded-md hover:bg-dark-teal-600 transition cursor-pointer">
+        Entrar
+      </button>
+      @if (errorMessage()) {
+      <div class="bg-red-50 border-l-4 border-red-500 p-3 my-2 animate-in fade-in duration-300">
+        <div class="flex items-center">
+          <span class="text-red-700 text-sm font-medium">{{ errorMessage() }}</span>
+        </div>
+      </div>
+      }
+      <div class="relative flex py-3 items-center">
+        <div class="flex-grow border-t border-gray-300"></div>
+        <span class="flex-shrink mx-4 text-gray-400 text-sm">o</span>
+        <div class="flex-grow border-t border-gray-300"></div>
+      </div>
+
+      <button (click)="onLoginWithGoogle()" [disabled]="loading()" type="button"
+        class="w-full border border-gray-300 py-2 rounded-md flex items-center justify-center gap-2 hover:bg-gray-50 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ...">
+        <img src="https://www.google.com/favicon.ico" class="w-4 h-4">
+        {{ loading() ? 'Cargando...' : 'Iniciar conGoogle' }}
+      </button>
+      <small>Ya tienes cuenta <a href="" class="text-baltic-blue-800 underline">Inicia sesión</a></small>
+    </form>
+  </div>
+  <div class="flex  w-full flex-col items-center max-h-screen hidden md:block md:grid-cols-2  ">
+    <h2 class="w-full text-5xl font-bold text-dark-teal-700 bg-gray-200 p-10">Organiza tus ideas</h2>
+    <div class="p-10  content-center justify-center  rounded-full lg:w-100 ">
+      <img src="../../../assets/login-ilustration.svg" alt="" class="  w-full lg:max-w-100">
+    </div>
+  </div>
+</div>
+
+<!-- Nombres válidos
+Tipos de datos
+Operador módulo %
+Tipado estático
+Clase vs objeto
+Herencia y override
+Polimorfismo
+Encapsulamiento -->
